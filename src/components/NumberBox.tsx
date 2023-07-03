@@ -41,7 +41,7 @@ const NumberBox = (
             if(setNum) setNum(parseInt(event.currentTarget.value));
         }}>
         {
-            !setNum ? 
+            !num ? 
             <option>+</option> 
             :
             Array(45).fill(0).map((value, idx) =>
