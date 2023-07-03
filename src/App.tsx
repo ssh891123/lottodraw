@@ -10,6 +10,34 @@ const NumberBoxContainer = styled.div`
   margin-top: 24px;
 `;
 
+function getRank(
+  resultNum: [number, number, number, number, number, number, number], 
+  num: [number, number, number, number, number, number]) 
+{
+  const isBouns = num.includes(resultNum[6]);
+  //splice(a, b). a: 제거할 Index, b: 제거할 개수. a===0 이면 제거되지 않음
+  resultNum.splice(6, 1);
+
+  let matchedNum = 0;
+
+  for(const value of num) {
+    if(resultNum.includes(value))
+      matchedNum++;
+  }
+
+  switch(matchedNum) {
+    case 6:
+      return '1등 입니다';
+    case 5:
+      return isBouns ? '2등입니다!': '3등 입니다!';
+    case 4:
+      return '4등 입니다.';
+    case 3:
+      return '5등 입니다.';
+  }
+  return '낙첨 되었습니다.'
+}
+
 function App() {
   // Length가 7로 고정된 Array 
   const [num, setNum] = useState<
@@ -74,7 +102,14 @@ function App() {
             }
           </NumberBoxContainer>
           
-          <Title>정답 번호</Title>
+          <div style={{ height: 40 }}></div>
+          <Title>
+            {
+              // getRank 내부에 splice를 통해 array의 item을 제거함
+              // 원본이 수정되므로 값을 넘겨줄때 복사해서 넘겨줌
+              getRank([...num], [...randNum])
+            }
+          </Title>
         </>
       }
     </div>
